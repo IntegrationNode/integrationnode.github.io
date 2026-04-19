@@ -16,12 +16,12 @@ BASE_DIR="odoo-integration-gmail-docs"
 
 for lang in "${LANGS[@]}"; do
   for page in "${PAGES[@]}"; do
-    if [ -z "$lang" ]; then
-      src_path="$BASE_DIR/$page"
-      dest_path="/gmail-odoo/$page"
+    lang_prefix="${lang:+$lang/}"
+    src_path="$BASE_DIR/$lang_prefix$page"
+    if [ "$page" = "index.html" ]; then
+      dest_path="/gmail-odoo/$lang_prefix"
     else
-      src_path="$BASE_DIR/$lang/$page"
-      dest_path="/gmail-odoo/$lang/$page"
+      dest_path="/gmail-odoo/$lang_prefix$page"
     fi
     mkdir -p "$(dirname "$src_path")"
     cat > "$src_path" <<EOF
